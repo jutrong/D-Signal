@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { useRecoilState } from 'recoil';
 import { currentPositionState } from '@_recoil/atom/currentPosition';
+import { useQuery } from '@tanstack/react-query';
+
 
 declare global {
   interface Window {
@@ -9,10 +12,21 @@ declare global {
   }
 }
 
+
+
 const KakaoMap = () => {
   // 현재 위치의 좌표값을 저장할 상태
   const [currentPosition, setCurrentPosition] = useRecoilState(currentPositionState);
 
+  const getToiletData = async () => {
+    const { data } = await axios.get('/data/toilet.json');
+
+    return data.toiletData.slice(0, 100);;
+  }
+  const { data: toiletData } = useQuery({
+    queryKey: ['toiletData'],
+    queryFn: getToiletData,
+  });
 
   // 좌표 -> 주소 변환
   const getAddress = (lat: number, lng: number) => {
@@ -47,27 +61,25 @@ const KakaoMap = () => {
       });
     }
     getAddress(currentPosition.center.lat, currentPosition.center.lng);
-  }, [navigator.geolocation.getCurrentPosition, currentPosition]);
+  }, []);
 
   return (
-    <>
-      <Map
-        center={currentPosition.center}
-        style={{
-          // 지도의 크기
-          width: "100%",
-          height: "100vh",
-        }}
-        level={3} // 지도의 확대 레벨
+    <Map
+      center={currentPosition.center}
+      style={{
+        // 지도의 크기
+        width: "100%",
+        height: "100vh",
+      }}
+      level={3} // 지도의 확대 레벨
+    >
+      <MapTypeControl position={'TOPRIGHT'} />
+      <ZoomControl position={'RIGHT'} />
+      <MapMarker
+        position={currentPosition?.center}
       >
-        <MapTypeControl position={'TOPRIGHT'} />
-        <ZoomControl position={'RIGHT'} />
-        <MapMarker
-          position={currentPosition?.center}
-        >
-        </MapMarker>
-      </Map>
-    </>
+      </MapMarker>
+    </Map>
   )
 }
 
