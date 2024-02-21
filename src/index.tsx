@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@_style/theme';
+import { FontStyle, theme } from '@_style/theme';
 import GlobalStyle from '@_style/global';
 
 const root = ReactDOM.createRoot(
@@ -16,6 +16,7 @@ root.render(
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
+          <FontStyle />
           <GlobalStyle />
           <App />
         </BrowserRouter>
