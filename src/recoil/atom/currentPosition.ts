@@ -6,5 +6,6 @@ export const currentPositionState = atom<TCurrentPosition>({
   default: {
     center: { lat: 0, lng: 0 },
     address: '',
+    isLoading: true,
   },
 });

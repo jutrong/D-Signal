@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { useRecoilState } from 'recoil';
 import { currentPositionState } from '@_recoil/atom/currentPosition';
 import { useQuery } from '@tanstack/react-query';
+import EventMarkerContainer from './EventMarkerContainer';
 
 
 declare global {
@@ -13,19 +14,27 @@ declare global {
 }
 
 
-
 const KakaoMap = () => {
   // 현재 위치의 좌표값을 저장할 상태
   const [currentPosition, setCurrentPosition] = useRecoilState(currentPositionState);
-
   const getToiletData = async () => {
     const { data } = await axios.get('/data/toilet.json');
 
-    return data.toiletData.slice(0, 100);;
+    return data.toilet;
   }
   const { data: toiletData } = useQuery({
     queryKey: ['toiletData'],
     queryFn: getToiletData,
+  });
+
+  const markerLatLng = toiletData?.map((data: any) => {
+    return {
+      content: data.화장실명,
+      position: {
+        lat: data.WGS84위도,
+        lng: data.WGS84경도,
+      },
+    };
   });
 
   // 좌표 -> 주소 변환
@@ -57,17 +66,21 @@ const KakaoMap = () => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           },
+          isLoading: false,
         }));
       });
     }
+  }, [navigator.geolocation.getCurrentPosition]);
+
+  // 현재 위치 좌표값 상태저장
+  useEffect(() => {
     getAddress(currentPosition.center.lat, currentPosition.center.lng);
-  }, []);
+  }, [currentPosition.center])
 
   return (
     <Map
-      center={currentPosition.center}
+      center={{ lat: 37.47077904262148, lng: 126.93448160942854 }}
       style={{
-        // 지도의 크기
         width: "100%",
         height: "100vh",
       }}
@@ -75,11 +88,23 @@ const KakaoMap = () => {
     >
       <MapTypeControl position={'TOPRIGHT'} />
       <ZoomControl position={'RIGHT'} />
-      <MapMarker
-        position={currentPosition?.center}
-      >
-      </MapMarker>
-    </Map>
+      {/* {currentPosition.isLoading ? (<>...Loding</>) :
+        <MapMarker position={currentPosition.center}>
+          <div style={{ padding: "5px", color: "#000" }}>
+            "여기에 계신가요?!"
+          </div>
+        </MapMarker>} */}
+
+      {
+        markerLatLng?.map((marker: any) => (
+          <EventMarkerContainer
+            key={`EventMarkerContainer-${marker.position.lat}-${marker.position.lng}`}
+            position={marker.position}
+            content={marker.content}
+          />
+        ))
+      }
+    </Map >
   )
 }
 
