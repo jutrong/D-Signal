@@ -1,44 +1,25 @@
-import { useEffect } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { useRecoilState } from 'recoil';
 import { currentPositionState } from '@_recoil/atom/currentPosition';
-import { useQuery } from '@tanstack/react-query';
 import EventMarkerContainer from './EventMarkerContainer';
 import currentLocation from "@_assets/images/locaiton.webp"
+import { Toilet } from '@_types/toilet';
+import { markersState } from '@_recoil/atom/markers';
+import { TMarker } from '@_types/marker';
 
 declare global {
   interface Window {
     kakao: any;
   }
 }
-
-
-const KakaoMap = () => {
+type KakaoMapProps = {
+  toiletData: Toilet[] | undefined;
+}
+const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   // 현재 위치의 좌표값을 저장할 상태
   const [currentPosition, setCurrentPosition] = useRecoilState(currentPositionState);
-
-  const getToiletData = async () => {
-    const { data } = await axios.get('/data/toilet.json');
-
-    return data.toilet;
-  }
-
-  const { data: toiletData } = useQuery({
-    queryKey: ['toiletData'],
-    queryFn: getToiletData,
-  });
-
-
-  const markerLatLng = toiletData?.map((data: any) => {
-    return {
-      content: data.화장실명,
-      position: {
-        lat: data.WGS84위도,
-        lng: data.WGS84경도,
-      },
-    };
-  });
+  const [markerLatLng, setMarkerLatLng] = useRecoilState(markersState)
 
   // 좌표 -> 주소 변환
   const getAddress = (lat: number, lng: number) => {
@@ -51,7 +32,9 @@ const KakaoMap = () => {
           ' ' +
           result[0].address.region_2depth_name +
           ' ' +
-          result[0].address.region_3depth_name;
+          result[0].address.region_3depth_name +
+          ' ' +
+          result[0].address.main_address_no;
         setCurrentPosition((prevData) => ({ ...prevData, address: addressFullName }));
       }
     };
@@ -80,13 +63,24 @@ const KakaoMap = () => {
     getAddress(currentPosition.center.lat, currentPosition.center.lng);
   }, [currentPosition.center])
 
-
+  useEffect(() => {
+    if (toiletData) {
+      const markers = toiletData.map((data): TMarker => ({
+        content: data.화장실명,
+        position: {
+          lat: data.WGS84위도,
+          lng: data.WGS84경도,
+        },
+      }));
+      setMarkerLatLng((prev) => ({ ...prev, markers: markers }));
+    }
+  }, [toiletData]);
 
   return (
     <Map
       center={currentPosition.center}
       style={{
-        width: "100%",
+        width: "70%",
         height: "100vh",
       }}
       level={3}
@@ -106,7 +100,7 @@ const KakaoMap = () => {
         >
         </MapMarker>}
       {
-        markerLatLng?.map((marker: any, index: number) => (
+        markerLatLng?.markers.map((marker: any, index: number) => (
           <EventMarkerContainer
             key={index}
             position={marker.position}
