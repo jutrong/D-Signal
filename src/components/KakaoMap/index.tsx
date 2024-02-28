@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { useRecoilState } from 'recoil';
 import { currentPositionState } from '@_recoil/atom/currentPosition';
 import { useQuery } from '@tanstack/react-query';
 import EventMarkerContainer from './EventMarkerContainer';
-
+import currentLocation from "@_assets/images/locaiton.webp"
 
 declare global {
   interface Window {
@@ -17,15 +17,18 @@ declare global {
 const KakaoMap = () => {
   // 현재 위치의 좌표값을 저장할 상태
   const [currentPosition, setCurrentPosition] = useRecoilState(currentPositionState);
+
   const getToiletData = async () => {
     const { data } = await axios.get('/data/toilet.json');
 
     return data.toilet;
   }
+
   const { data: toiletData } = useQuery({
     queryKey: ['toiletData'],
     queryFn: getToiletData,
   });
+
 
   const markerLatLng = toiletData?.map((data: any) => {
     return {
@@ -77,28 +80,35 @@ const KakaoMap = () => {
     getAddress(currentPosition.center.lat, currentPosition.center.lng);
   }, [currentPosition.center])
 
+
+
   return (
     <Map
-      center={{ lat: 37.47077904262148, lng: 126.93448160942854 }}
+      center={currentPosition.center}
       style={{
         width: "100%",
         height: "100vh",
       }}
-      level={3} // 지도의 확대 레벨
+      level={3}
     >
       <MapTypeControl position={'TOPRIGHT'} />
       <ZoomControl position={'RIGHT'} />
-      {/* {currentPosition.isLoading ? (<>...Loding</>) :
-        <MapMarker position={currentPosition.center}>
-          <div style={{ padding: "5px", color: "#000" }}>
-            "여기에 계신가요?!"
-          </div>
-        </MapMarker>} */}
+      {currentPosition.isLoading ? (<>...Loding</>) :
+        <MapMarker position={currentPosition.center}
+          image={{
+            src: currentLocation,
+            size: {
+              width: 30,
+              height: 30,
+            },
 
+          }}
+        >
+        </MapMarker>}
       {
-        markerLatLng?.map((marker: any) => (
+        markerLatLng?.map((marker: any, index: number) => (
           <EventMarkerContainer
-            key={`EventMarkerContainer-${marker.position.lat}-${marker.position.lng}`}
+            key={index}
             position={marker.position}
             content={marker.content}
           />
