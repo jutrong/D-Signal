@@ -38,7 +38,6 @@ const PostList = ({ toiletData }: KakaoMapProps) => {
       const markersWithDistance = toiletData.map(data => {
         const currentLatLng = new kakao.maps.LatLng(currentPosition.center.lat, currentPosition.center.lng);
         const toiletLatLng = new kakao.maps.LatLng(data.WGS84위도, data.WGS84경도);
-
         // 두 지점을 연결하는 가상의 폴리라인 객체 생성
         const polyline = new kakao.maps.Polyline({
           path: [currentLatLng, toiletLatLng]
@@ -67,7 +66,6 @@ const PostList = ({ toiletData }: KakaoMapProps) => {
       setSortMarker(markersWithDistance);
     }
   }, [currentPosition, toiletData]);
-
   return (
     <S.Wrap>
       {sortMarker?.map((data: SortMarker) => {
