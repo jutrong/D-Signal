@@ -9,7 +9,8 @@
       "@_recoil/*": ["recoil/*"],
       "@_style/*": ["style/*"],
       "@_types/*": ["types/*"],
-      "@_utils/*": ["utils/*"]
+      "@_utils/*": ["utils/*"],
+      "@_firebase": ["firebaseApp.ts"]
     }
-  } 
+  }
 }
