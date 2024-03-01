@@ -11,6 +11,7 @@ type KakaoMapProps = {
   toiletData: Toilet[] | undefined;
 }
 export type SortMarker = {
+  id: string;
   content: string;
   position: {
     lat: number;
@@ -47,6 +48,7 @@ const PostList = ({ toiletData }: KakaoMapProps) => {
         const distance = polyline.getLength();
 
         return {
+          id: data.번호,
           content: data.화장실명,
           position: {
             lat: data.WGS84위도,
@@ -67,7 +69,7 @@ const PostList = ({ toiletData }: KakaoMapProps) => {
     }
   }, [currentPosition, toiletData]);
   return (
-    <S.Wrap>
+    <S.Wrap >
       {sortMarker?.map((data: SortMarker) => {
         return <Post data={data} />
       })}

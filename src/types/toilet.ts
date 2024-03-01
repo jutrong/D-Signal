@@ -1,4 +1,5 @@
 export type Toilet = {
+  id: string;
   번호: string;
   구분: string;
   화장실명: string;

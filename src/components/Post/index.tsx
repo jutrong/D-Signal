@@ -1,16 +1,21 @@
 import { Toilet } from '@_types/toilet';
 import * as S from './Post.styles'
 import { SortMarker } from '@_components/PostList';
+import { useNavigate } from 'react-router-dom';
 
 type PostProps = {
   data: SortMarker;
 }
 
 const Post = ({ data }: PostProps) => {
+  const navigate = useNavigate();
 
+  const onClickPost = () => {
+    navigate(`/postdetail/${data.id}`);
+  };
 
   return (
-    <S.Wrap>
+    <S.Wrap onClick={onClickPost}>
       <div>
         <p>구분</p>
         <p>{data.divisiton}</p>
