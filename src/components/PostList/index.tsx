@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { markersState } from "@_recoil/atom/markers";
 import { currentPositionState } from "@_recoil/atom/currentPosition";
 import { TMarker } from "@_types/marker";
+import { FixedSizeList as List } from 'react-window';
 
 type KakaoMapProps = {
   toiletData: Toilet[] | undefined;
@@ -24,7 +25,14 @@ export type SortMarker = {
 
 }
 
-const PostList = ({ toiletData }: KakaoMapProps) => {
+const Row = ({ index, style, data }: { index: number, style: React.CSSProperties, data: SortMarker[] }) => (
+  <div style={style}>
+    <Post data={data[index]} />
+  </div>
+);
+
+const ListComponent = ({ toiletData }: KakaoMapProps) => {
+
   const currentPosition = useRecoilValue(currentPositionState);
   const [sortMarker, setSortMarker] = useState<SortMarker[]>()
 
@@ -67,11 +75,29 @@ const PostList = ({ toiletData }: KakaoMapProps) => {
       setSortMarker(markersWithDistance);
     }
   }, [currentPosition, toiletData]);
+
+  return (
+    <List
+      height={820}
+      width={500}
+      itemSize={120}
+      itemCount={sortMarker?.length || 0}
+      itemData={sortMarker}
+    >
+      {Row}
+    </List >
+  )
+}
+
+
+const PostList = ({ toiletData }: KakaoMapProps) => {
+
   return (
     <S.Wrap >
-      {sortMarker?.map((data: SortMarker) => {
+      <ListComponent toiletData={toiletData} />
+      {/* {sortMarker?.map((data: SortMarker) => {
         return <Post data={data} />
-      })}
+      })} */}
     </S.Wrap>
   )
 }

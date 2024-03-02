@@ -21,6 +21,7 @@ const PostDetail = () => {
       setPost({ id: docSnap.id, ...(docSnap.data() as Toilet) })
     }
   }
+
   const onClickPrevBtn = () => {
     navigate(-1)
   }
