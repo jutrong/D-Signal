@@ -91,7 +91,6 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
 
 
 const PostList = ({ toiletData }: KakaoMapProps) => {
-
   return (
     <S.Wrap >
       <ListComponent toiletData={toiletData} />
