@@ -32,7 +32,6 @@ const Row = ({ index, style, data }: { index: number, style: React.CSSProperties
 );
 
 const ListComponent = ({ toiletData }: KakaoMapProps) => {
-
   const currentPosition = useRecoilValue(currentPositionState);
   const [sortMarker, setSortMarker] = useState<SortMarker[]>()
 
@@ -53,7 +52,6 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
 
         // 폴리라인 길이(거리) 계산
         const distance = polyline.getLength();
-
         return {
           id: data.id,
           content: data.화장실명,
@@ -66,6 +64,7 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
           openTime: data.개방시간,
           distance: distance
         };
+
       });
 
       // 거리에 따라 정렬

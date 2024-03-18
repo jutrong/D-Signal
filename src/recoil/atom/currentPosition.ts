@@ -5,7 +5,7 @@ export const currentPositionState = atom<TCurrentPosition>({
   key: 'currentPositionState',
   default: {
     center: { lat: 0, lng: 0 },
-    address: '',
+    address: '서울특별시 금천구',
     isLoading: true,
   },
 });

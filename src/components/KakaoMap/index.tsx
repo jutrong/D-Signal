@@ -32,9 +32,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
           ' ' +
           result[0].address.region_2depth_name +
           ' ' +
-          result[0].address.region_3depth_name +
-          ' ' +
-          result[0].address.main_address_no;
+          result[0].address.region_3depth_name;
         setCurrentPosition((prevData) => ({ ...prevData, address: addressFullName }));
       }
     };
