@@ -1,10 +1,10 @@
-import { db } from "@_firebase";
 import { Toilet } from "@_types/toilet";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as S from './Post.styles'
 import KakaoStaticMap from "@_components/KakaoMap/KakaoStaticMap";
+import { db } from "@_remote/firebaseApp";
 
 
 
