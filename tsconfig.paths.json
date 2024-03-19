@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@_apis/*": ["apis/*"],
-      "@_assets/*": ["assets/*"],
-      "@_components/*": ["components/*"],
-      "@_pages/*": ["pages/*"],
-      "@_recoil/*": ["recoil/*"],
-      "@_style/*": ["style/*"],
-      "@_types/*": ["types/*"],
-      "@_utils/*": ["utils/*"],
-      "@_firebase": ["firebaseApp.ts"]
+      "@_*": ["src/*"],
+      "@_remote/*": ["src/remote/*"],
+      "@_assets/*": ["src/assets/*"],
+      "@_components/*": ["src/components/*"],
+      "@_pages/*": ["src/pages/*"],
+      "@_recoil/*": ["src/recoil/*"],
+      "@_style/*": ["src/style/*"],
+      "@_types/*": ["src/types/*"],
+      "@_utils/*": ["src/utils/*"],
+      "@_constants/*": ["src/constants/index"],
+      "@_hooks/*": ["src/hooks/*"]
     }
   }
 }
