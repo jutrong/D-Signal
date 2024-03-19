@@ -12,6 +12,12 @@ export const Wrap = styled.div`
 export const CurrentPositionWrap = styled.div``;
 export const Where = styled.span``;
 export const Position = styled.span``;
-export const Login = styled.div`
+export const Signin = styled.div`
   cursor: pointer;
+`;
+export const UserImg = styled.img`
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 50%;
 `;

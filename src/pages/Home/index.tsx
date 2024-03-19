@@ -4,10 +4,9 @@ import PostList from '@_components/PostList';
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { Toilet } from '@_types/toilet';
-import { db } from '@_firebase';
-import { getToiletsBySimilarAddress } from '@_apis/toiletData';
 import { useRecoilValue } from 'recoil';
 import { currentPositionState } from '@_recoil/atom/currentPosition';
+import { getToiletsBySimilarAddress } from '@_remote/toiletData';
 
 
 
