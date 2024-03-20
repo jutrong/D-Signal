@@ -67,7 +67,6 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
       // 거리에 따라 정렬
       markersWithDistance.sort((a, b) => a.distance - b.distance);
 
-      // Recoil 상태 업데이트
       setSortMarker(markersWithDistance);
     }
   }, [currentPosition, toiletData]);

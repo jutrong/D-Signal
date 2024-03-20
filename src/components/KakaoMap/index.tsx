@@ -20,7 +20,6 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   // 현재 위치의 좌표값을 저장할 상태
   const { currentPosition, setCurrentPosition } = usePositionStore()
   const { markers, setMarkers } = useMarkerStore()
-  // const [markerLatLng, setMarkerLatLng] = useRecoilState(markersState)
 
   // 좌표 -> 주소 변환
   const getAddress = (lat: number, lng: number) => {
@@ -50,7 +49,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           },
-          address: currentPosition.address, // 기존 주소 유지
+          address: currentPosition.address,
         });
       });
     }
@@ -59,7 +58,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   // 현재 위치 좌표값 상태저장
   useEffect(() => {
     getAddress(currentPosition.center.lat, currentPosition.center.lng);
-  }, [currentPosition.center.lat, currentPosition.center.lng,])
+  }, [currentPosition.center.lat, currentPosition.center.lng])
 
   useEffect(() => {
     if (toiletData) {
