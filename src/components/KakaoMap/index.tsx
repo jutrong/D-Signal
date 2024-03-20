@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
-import { useRecoilState } from 'recoil';
 import EventMarkerContainer from './EventMarkerContainer';
 import currentLocation from "@_assets/images/locaiton.webp"
 import { Toilet } from '@_types/toilet';
-import { markersState } from '@_recoil/atom/markers';
 import { TMarker } from '@_types/marker';
 import { usePositionStore } from '@_store/currentPosition';
+import { useMarkerStore } from '@_store/markers';
 
 declare global {
   interface Window {
@@ -20,7 +19,8 @@ type KakaoMapProps = {
 const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   // 현재 위치의 좌표값을 저장할 상태
   const { currentPosition, setCurrentPosition } = usePositionStore()
-  const [markerLatLng, setMarkerLatLng] = useRecoilState(markersState)
+  const { markers, setMarkers } = useMarkerStore()
+  // const [markerLatLng, setMarkerLatLng] = useRecoilState(markersState)
 
   // 좌표 -> 주소 변환
   const getAddress = (lat: number, lng: number) => {
@@ -70,7 +70,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
           lng: data.WGS84경도,
         },
       }));
-      setMarkerLatLng((prev) => ({ ...prev, markers: markers }));
+      setMarkers(markers);
     }
   }, [toiletData]);
 
@@ -96,9 +96,10 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
 
           }}
         >
-        </MapMarker>}
+        </MapMarker>
+      }
       {
-        markerLatLng?.markers.map((marker: any, index: number) => (
+        markers?.map((marker: any, index: number) => (
           <EventMarkerContainer
             key={index}
             position={marker.position}

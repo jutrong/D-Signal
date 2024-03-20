@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type TCurrentPosition = {
+interface ICurrentPositionStore {
   currentPosition: {
     center: { lat: number; lng: number };
     address: string;
@@ -13,9 +13,9 @@ export type TCurrentPosition = {
     center: { lat: number; lng: number };
     address: string;
   }) => void;
-};
+}
 
-export const usePositionStore = create<TCurrentPosition>()((set) => ({
+export const usePositionStore = create<ICurrentPositionStore>()((set) => ({
   currentPosition: {
     center: { lat: 0, lng: 0 },
     address: '서울특별시 금천구',
