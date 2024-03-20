@@ -12,7 +12,8 @@
       "@_types/*": ["src/types/*"],
       "@_utils/*": ["src/utils/*"],
       "@_constants/*": ["src/constants/index"],
-      "@_hooks/*": ["src/hooks/*"]
+      "@_hooks/*": ["src/hooks/*"],
+      "@_store/*": ["src/store/*"]
     }
   }
 }
