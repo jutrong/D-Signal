@@ -1,15 +1,16 @@
 import { useSetRecoilState } from 'recoil';
 import * as S from './Header.styles';
-import { ModalName, modalState } from '@_recoil/atom/modal';
 import Modal from '../Modal';
 import Signin from '@_components/Signin';
 import { usePositionStore } from '@_store/currentPosition';
 import { useUserStore } from '@_store/user';
+import { ModalName, useModalStore } from '@_store/modal';
 
 //TODO: 유저 이미지 클릭시 마이페이지 이동, 마이페이지에서 로그아웃 기능
 
 const Header = () => {
-  const setModal = useSetRecoilState(modalState);
+  const { setModal } = useModalStore()
+  // const setModal = useSetRecoilState(modalState);
   const { currentPosition } = usePositionStore()
   const { user } = useUserStore()
 

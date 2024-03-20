@@ -1,6 +1,6 @@
 import { COLLECTIONS } from '@_constants';
-import { useCloseModal } from '@_hooks/useCloseModal';
 import { auth, db } from '@_remote/firebaseApp';
+import { useModalStore } from '@_store/modal';
 import { FirebaseError } from 'firebase/app';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const useGoogleSignin = () => {
   const navigate = useNavigate();
-  const closeModal = useCloseModal();
+  const { closeModal } = useModalStore();
 
   const signin = useCallback(async () => {
     const provider = new GoogleAuthProvider();

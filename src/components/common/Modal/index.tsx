@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
-import { ModalName, modalState, useCloseModal } from "../../../recoil/atom/modal";
-import { useRecoilValue } from "recoil";
 import * as S from "./Modal.styles";
 import Portal from "./Portal";
+import { ModalName, useModalStore } from "@_store/modal";
 
 type ModalProps = {
   children: ReactNode;
@@ -14,8 +13,8 @@ type ModalProps = {
  */
 
 const Modal = ({ children, name }: ModalProps) => {
-  const closeModal = useCloseModal();
-  const { name: currentModalName, isActive } = useRecoilValue(modalState)
+  const { modal, closeModal } = useModalStore()
+  // const { name: currentModalName, isActive } = useRecoilValue(modalState)
 
   const handleOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget.firstChild) {
@@ -23,7 +22,7 @@ const Modal = ({ children, name }: ModalProps) => {
     }
   };
 
-  if (!isActive || currentModalName !== name) return null;
+  if (!modal.isActive || modal.name !== name) return null;
 
   return (
     <Portal>
