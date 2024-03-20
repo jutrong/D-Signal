@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { BrowserRouter } from 'react-router-dom';
@@ -15,20 +14,15 @@ const root = ReactDOM.createRoot(
 const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <FontStyle />
-            <GlobalStyle />
-            <App />
-          </BrowserRouter>
-        </ThemeProvider>
-      </QueryClientProvider>
-
-    </RecoilRoot >
-
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <FontStyle />
+          <GlobalStyle />
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
