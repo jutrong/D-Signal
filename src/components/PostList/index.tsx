@@ -2,11 +2,8 @@ import Post from "@_components/Post";
 import { Toilet } from "@_types/toilet";
 import * as S from './PostList.styles'
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { markersState } from "@_recoil/atom/markers";
-import { currentPositionState } from "@_recoil/atom/currentPosition";
-import { TMarker } from "@_types/marker";
 import { FixedSizeList as List } from 'react-window';
+import { usePositionStore } from "@_store/currentPosition";
 
 type KakaoMapProps = {
   toiletData: Toilet[] | undefined;
@@ -32,7 +29,7 @@ const Row = ({ index, style, data }: { index: number, style: React.CSSProperties
 );
 
 const ListComponent = ({ toiletData }: KakaoMapProps) => {
-  const currentPosition = useRecoilValue(currentPositionState);
+  const { currentPosition } = usePositionStore()
   const [sortMarker, setSortMarker] = useState<SortMarker[]>()
 
 

@@ -1,19 +1,18 @@
 import KakaoMap from '@_components/KakaoMap';
 import * as S from './Home.styles';
 import PostList from '@_components/PostList';
-import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { Toilet } from '@_types/toilet';
-import { useRecoilValue } from 'recoil';
-import { currentPositionState } from '@_recoil/atom/currentPosition';
 import { getToiletsBySimilarAddress } from '@_remote/toiletData';
+import { usePositionStore } from '@_store/currentPosition';
 
 
 
 
 const Home = () => {
   const [toiletData, setToiletData] = useState<Toilet[]>([]);
-  const currentLocation = useRecoilValue(currentPositionState);
+  const { currentPosition } = usePositionStore()
+
   // const getPost = async () => {
   //   const data = await getDocs(collection(db, "toilet"));
 
@@ -31,14 +30,14 @@ const Home = () => {
   useEffect(() => {
     const fetchToilets = async () => {
       try {
-        const fetchedToilets = await getToiletsBySimilarAddress(currentLocation.address);
+        const fetchedToilets = await getToiletsBySimilarAddress(currentPosition.address);
         setToiletData(fetchedToilets);
       } catch (error) {
         console.error("Error fetching toilets:", error);
       }
     };
     fetchToilets();
-  }, [currentLocation.address]);
+  }, [currentPosition.address]);
   return (
     <S.Wrap>
       <KakaoMap toiletData={toiletData} />

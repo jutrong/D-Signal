@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { useRecoilState } from 'recoil';
-import { currentPositionState } from '@_recoil/atom/currentPosition';
 import EventMarkerContainer from './EventMarkerContainer';
 import currentLocation from "@_assets/images/locaiton.webp"
 import { Toilet } from '@_types/toilet';
 import { markersState } from '@_recoil/atom/markers';
 import { TMarker } from '@_types/marker';
+import { usePositionStore } from '@_store/currentPosition';
 
 declare global {
   interface Window {
@@ -16,9 +16,10 @@ declare global {
 type KakaoMapProps = {
   toiletData: Toilet[] | undefined;
 }
+
 const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   // 현재 위치의 좌표값을 저장할 상태
-  const [currentPosition, setCurrentPosition] = useRecoilState(currentPositionState);
+  const { currentPosition, setCurrentPosition } = usePositionStore()
   const [markerLatLng, setMarkerLatLng] = useRecoilState(markersState)
 
   // 좌표 -> 주소 변환
@@ -33,7 +34,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
           result[0].address.region_2depth_name +
           ' ' +
           result[0].address.region_3depth_name;
-        setCurrentPosition((prevData) => ({ ...prevData, address: addressFullName }));
+        setCurrentPosition({ center: { lat: lat, lng: lng }, address: addressFullName })
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
@@ -44,22 +45,21 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setCurrentPosition((prev) => ({
-          ...prev,
+        setCurrentPosition({
           center: {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           },
-          isLoading: false,
-        }));
+          address: currentPosition.address, // 기존 주소 유지
+        });
       });
     }
-  }, [navigator.geolocation.getCurrentPosition]);
+  }, [currentPosition.address, setCurrentPosition]);
 
   // 현재 위치 좌표값 상태저장
   useEffect(() => {
     getAddress(currentPosition.center.lat, currentPosition.center.lng);
-  }, [currentPosition.center])
+  }, [currentPosition.center.lat, currentPosition.center.lng,])
 
   useEffect(() => {
     if (toiletData) {
