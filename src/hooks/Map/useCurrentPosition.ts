@@ -15,6 +15,7 @@ export const useCurrentPosition = () => {
             lng: coords.longitude,
           },
           address: '',
+          isLoading: false,
         });
       });
     }

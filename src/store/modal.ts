@@ -20,6 +20,9 @@ export const useModalStore = create<IModalStore>((set) => ({
     name: null,
     isActive: false,
   },
-  setModal: (modal) => set({ modal }),
-  closeModal: () => set({ modal: { name: null, isActive: false } }),
+  setModal: (modal) =>
+    set(() => ({
+      modal,
+    })),
+  closeModal: () => set(() => ({ modal: { name: null, isActive: false } })),
 }));

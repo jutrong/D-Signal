@@ -20,7 +20,6 @@ type KakaoMapProps = {
 }
 
 const KakaoMap = ({ toiletData }: KakaoMapProps) => {
-  // 현재 위치의 좌표값을 저장할 상태
   const { currentPosition } = usePositionStore();
   const { markers } = useMarkerStore();
 
@@ -41,19 +40,16 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
     >
       <MapTypeControl position={'TOPRIGHT'} />
       <ZoomControl position={'RIGHT'} />
-      {currentPosition.isLoading ? (<>...Loding</>) :
-        <MapMarker position={currentPosition.center}
-          image={{
-            src: currentLocation,
-            size: {
-              width: 30,
-              height: 30,
-            },
-
-          }}
-        >
-        </MapMarker>
-      }
+      <MapMarker position={currentPosition.center}
+        image={{
+          src: currentLocation,
+          size: {
+            width: 30,
+            height: 30,
+          },
+        }}
+      >
+      </MapMarker>
       {
         markers?.map((marker: any, index: number) => (
           <EventMarkerContainer

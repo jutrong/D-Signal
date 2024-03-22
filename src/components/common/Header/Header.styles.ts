@@ -9,7 +9,16 @@ export const Wrap = styled.div`
   align-items: center;
   padding: 0 20px;
 `;
-export const CurrentPositionWrap = styled.div``;
+export const LogoWrap = styled.div`
+  flex: 1;
+  font-weight: 900;
+  cursor: pointer;
+  min-width: 100px;
+`;
+export const Logo = styled.p``;
+export const CurrentPositionWrap = styled.div`
+  flex: 8;
+`;
 export const Where = styled.span``;
 export const Position = styled.span``;
 export const Signin = styled.div`
@@ -20,4 +29,5 @@ export const UserImg = styled.img`
   height: 36px;
   object-fit: cover;
   border-radius: 50%;
+  cursor: pointer;
 `;

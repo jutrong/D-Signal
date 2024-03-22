@@ -89,9 +89,6 @@ const PostList = ({ toiletData }: KakaoMapProps) => {
   return (
     <S.Wrap >
       <ListComponent toiletData={toiletData} />
-      {/* {sortMarker?.map((data: SortMarker) => {
-        return <Post data={data} />
-      })} */}
     </S.Wrap>
   )
 }

@@ -1,10 +1,9 @@
-import useGoogleSignin from '@_hooks/auth/useGoogleSignin';
+import useGoogleSignin from '@_hooks/Auth/useGoogleSignin';
 import * as S from './Signin.styles'
 import { useModalStore } from '@_store/modal';
 
 const Signin = () => {
   const { signin } = useGoogleSignin()
-  // const closeModal = useCloseModal();
   const { closeModal } = useModalStore()
 
   return (
