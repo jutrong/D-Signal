@@ -11,7 +11,12 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     if (user === null) {
       setUser(null)
     } else {
-      setUser(null)
+      setUser({
+        uid: user.uid,
+        email: user.email || '',
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || '',
+      })
     }
     setInitialize(true)
   })

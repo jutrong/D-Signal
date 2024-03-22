@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const Wrap = styled.div`
   position: absolute;
-  top: 50%;
-  right: 3%;
+  /* top: 50%; */
+  bottom: 0%;
+  right: 0%;
   z-index: 99;
-  transform: translateY(-50%);
+  /* transform: translateY(-50%); */
   max-width: 300px;
   height: 70%;
   background: white;
@@ -14,7 +15,7 @@ export const Wrap = styled.div`
   align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  border-radius: 50px;
+  border-radius: 50px 0 0 0;
   box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
 `;
 export const NoDataWrap = styled.div`
@@ -23,6 +24,6 @@ export const NoDataWrap = styled.div`
   align-items: center;
   height: 100%;
   color: crimson;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
 `;

@@ -18,7 +18,7 @@ export const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 10;
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;

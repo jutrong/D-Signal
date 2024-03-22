@@ -13,20 +13,6 @@ const Home = () => {
   const [toiletData, setToiletData] = useState<Toilet[]>([]);
   const { currentPosition } = usePositionStore()
 
-  // const getPost = async () => {
-  //   const data = await getDocs(collection(db, "toilet"));
-
-
-  //   data?.forEach((doc) => {
-  //     const dataObj = { ...doc.data() as Toilet, id: doc.id }
-  //     setToiletData((prev) => [...prev, dataObj as Toilet]);
-  //   })
-  // }
-
-
-  // useEffect(() => {
-  //   getPost()
-  // }, [])
   useEffect(() => {
     const fetchToilets = async () => {
       try {

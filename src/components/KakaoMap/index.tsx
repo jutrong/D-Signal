@@ -38,7 +38,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
       }}
       level={3}
     >
-      <MapTypeControl position={'TOPRIGHT'} />
+      <MapTypeControl position={'RIGHT'} />
       <ZoomControl position={'RIGHT'} />
       <MapMarker position={currentPosition.center}
         image={{

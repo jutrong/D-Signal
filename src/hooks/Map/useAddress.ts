@@ -20,6 +20,7 @@ export const useAddress = (lat: number, lng: number) => {
         setCurrentPosition({
           center: { lat: lat, lng: lng },
           address: addressFullName,
+          isLoading: false,
         });
       }
     };

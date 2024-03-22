@@ -1,4 +1,3 @@
-import { Toilet } from '@_types/toilet';
 import * as S from './Post.styles'
 import { SortMarker } from '@_components/PostList';
 import { useNavigate } from 'react-router-dom';
