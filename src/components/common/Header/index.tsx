@@ -6,6 +6,8 @@ import { useUserStore } from '@_store/user';
 import { ModalName, useModalStore } from '@_store/modal';
 import { useNavigate } from 'react-router-dom';
 
+import Logo from '@_assets/images/logo.png'
+
 const Header = () => {
   const navigate = useNavigate()
   const { setModal } = useModalStore()
@@ -27,7 +29,9 @@ const Header = () => {
         <Signin />
       </Modal>
       <S.Wrap>
-        <S.LogoWrap onClick={onClickLogo}>D-SIGNAL</S.LogoWrap>
+        <S.LogoWrap onClick={onClickLogo} >
+          <S.Logo src={Logo} alt="로고" />
+        </S.LogoWrap>
         <S.CurrentPositionWrap>
           <S.Where>현재 위치 : </S.Where>
           <S.Position>{currentPosition.address}</S.Position>
@@ -35,7 +39,7 @@ const Header = () => {
         {user ?
           <S.UserImg src={user?.photoURL} alt="유저 이미지" onClick={onClickUserImg} />
           :
-          <S.Signin onClick={onClickSignIn}>Login</S.Signin>
+          <S.Signin onClick={onClickSignIn}>로그인</S.Signin>
         }
 
       </S.Wrap>
