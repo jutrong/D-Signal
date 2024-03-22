@@ -6,8 +6,6 @@ import { useUserStore } from '@_store/user';
 import { ModalName, useModalStore } from '@_store/modal';
 import { useNavigate } from 'react-router-dom';
 
-//TODO: 유저 이미지 클릭시 마이페이지 이동, 마이페이지에서 로그아웃 기능
-
 const Header = () => {
   const navigate = useNavigate()
   const { setModal } = useModalStore()
@@ -24,7 +22,7 @@ const Header = () => {
     navigate('/')
   }
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <Modal name={ModalName.signin} >
         <Signin />
       </Modal>
@@ -41,7 +39,7 @@ const Header = () => {
         }
 
       </S.Wrap>
-    </>
+    </div>
   )
 }
 

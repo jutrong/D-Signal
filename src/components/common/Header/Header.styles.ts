@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export const Wrap = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: white;
   width: 100%;
   height: 60px;
   border-bottom: 1px solid #444;

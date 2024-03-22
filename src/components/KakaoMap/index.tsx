@@ -33,7 +33,7 @@ const KakaoMap = ({ toiletData }: KakaoMapProps) => {
     <Map
       center={currentPosition.center}
       style={{
-        width: "70%",
+        width: "100%",
         height: "100vh",
       }}
       level={3}

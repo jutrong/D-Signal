@@ -32,8 +32,6 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
   const { currentPosition } = usePositionStore()
   const [sortMarker, setSortMarker] = useState<SortMarker[]>()
 
-
-
   useEffect(() => {
     if (window.kakao && window.kakao.maps && currentPosition && toiletData) {
       const kakao = window.kakao;
@@ -74,8 +72,8 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
   return (
     <List
       height={820}
-      width={500}
-      itemSize={120}
+      width={350}
+      itemSize={150}
       itemCount={sortMarker?.length || 0}
       itemData={sortMarker}
     >
@@ -88,7 +86,6 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
 const PostList = ({ toiletData }: KakaoMapProps) => {
   return (
     <>
-
       <S.Wrap >
         {toiletData?.length === 0 &&
           <S.NoDataWrap>화장실 데이터가 없습니다.</S.NoDataWrap>
