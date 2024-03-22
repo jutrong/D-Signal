@@ -6,6 +6,9 @@ import { Toilet } from '@_types/toilet';
 import { TMarker } from '@_types/marker';
 import { usePositionStore } from '@_store/currentPosition';
 import { useMarkerStore } from '@_store/markers';
+import { useCurrentPosition } from '@_hooks/Map/useCurrentPosition';
+import { useAddress } from '@_hooks/Map/useAddress';
+import { useMarkers } from '@_hooks/Map/useMarkers';
 
 declare global {
   interface Window {
@@ -18,60 +21,14 @@ type KakaoMapProps = {
 
 const KakaoMap = ({ toiletData }: KakaoMapProps) => {
   // 현재 위치의 좌표값을 저장할 상태
-  const { currentPosition, setCurrentPosition } = usePositionStore()
-  const { markers, setMarkers } = useMarkerStore()
+  const { currentPosition } = usePositionStore();
+  const { markers } = useMarkerStore();
 
-  // 좌표 -> 주소 변환
-  const getAddress = (lat: number, lng: number) => {
-    const geocoder = new kakao.maps.services.Geocoder();
-    const coord = new kakao.maps.LatLng(currentPosition.center.lat, currentPosition.center.lng);
-    const callback = function (result: any, status: any) {
-      if (status === kakao.maps.services.Status.OK) {
-        const addressFullName =
-          result[0].address.region_1depth_name +
-          ' ' +
-          result[0].address.region_2depth_name +
-          ' ' +
-          result[0].address.region_3depth_name;
-        setCurrentPosition({ center: { lat: lat, lng: lng }, address: addressFullName })
-      }
-    };
-    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-  };
-
-
-  // GeoLocation을 이용해서 접속 위치를 얻어옴
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setCurrentPosition({
-          center: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          },
-          address: currentPosition.address,
-        });
-      });
-    }
-  }, [currentPosition.address, setCurrentPosition]);
-
-  // 현재 위치 좌표값 상태저장
-  useEffect(() => {
-    getAddress(currentPosition.center.lat, currentPosition.center.lng);
-  }, [currentPosition.center.lat, currentPosition.center.lng])
-
-  useEffect(() => {
-    if (toiletData) {
-      const markers = toiletData.map((data): TMarker => ({
-        content: data.화장실명,
-        position: {
-          lat: data.WGS84위도,
-          lng: data.WGS84경도,
-        },
-      }));
-      setMarkers(markers);
-    }
-  }, [toiletData]);
+  // 현재 위치를 가져오고 주소로 변환
+  useCurrentPosition();
+  useAddress(currentPosition.center.lat, currentPosition.center.lng);
+  // 화장실 데이터를 바탕으로 마커 상태를 설정
+  useMarkers(toiletData ?? []);
 
   return (
     <Map

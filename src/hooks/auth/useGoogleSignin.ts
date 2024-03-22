@@ -32,8 +32,8 @@ const useGoogleSignin = () => {
 
         await setDoc(doc(collection(db, COLLECTIONS.USER), user.uid), newUser);
         navigate('/');
-        closeModal();
       }
+      closeModal();
     } catch (error) {
       if (error instanceof FirebaseError) {
         if (error.code === 'auth/popup-closed-by-user') {

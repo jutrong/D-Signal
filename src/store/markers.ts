@@ -8,5 +8,5 @@ interface IMarkerStore {
 
 export const useMarkerStore = create<IMarkerStore>()((set) => ({
   markers: [],
-  setMarkers: (markers: TMarker[]) => set({ markers }),
+  setMarkers: (markers: TMarker[]) => set(() => ({ markers })),
 }));

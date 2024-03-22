@@ -29,7 +29,10 @@ export const usePositionStore = create<ICurrentPositionStore>()((set) => ({
     address: string;
   }) =>
     set((state) => ({
-      ...state,
-      currentPosition: { ...state.currentPosition, center, address },
+      currentPosition: {
+        ...state.currentPosition,
+        center,
+        address,
+      },
     })),
 }));
