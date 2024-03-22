@@ -87,9 +87,15 @@ const ListComponent = ({ toiletData }: KakaoMapProps) => {
 
 const PostList = ({ toiletData }: KakaoMapProps) => {
   return (
-    <S.Wrap >
-      <ListComponent toiletData={toiletData} />
-    </S.Wrap>
+    <>
+
+      <S.Wrap >
+        {toiletData?.length === 0 &&
+          <S.NoDataWrap>화장실 데이터가 없습니다.</S.NoDataWrap>
+        }
+        <ListComponent toiletData={toiletData} />
+      </S.Wrap>
+    </>
   )
 }
 
