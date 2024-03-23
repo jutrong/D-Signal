@@ -2,7 +2,13 @@ import COLLECTIONS from '@_constants';
 import { db } from '@_remote/firebaseApp';
 import { useUserStore } from '@_store/user';
 import { IReview } from '@_types/review';
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from 'firebase/firestore';
 import { useState } from 'react';
 
 export const useReview = ({ postId }: { postId?: string }) => {
@@ -33,6 +39,23 @@ export const useReview = ({ postId }: { postId?: string }) => {
     }
   };
 
+  const deleteReview = async (postId: string, reviewId: string) => {
+    try {
+      const postRef = doc(db, COLLECTIONS.toilet, postId);
+      const reviewRef = doc(collection(postRef, COLLECTIONS.REVIEW), reviewId);
+      await deleteDoc(reviewRef);
+
+      alert('리뷰가 삭제되었습니다.');
+      // 선택적: 삭제 후 리뷰 목록 갱신
+      if (postId) {
+        await getReviews(postId);
+      }
+    } catch (err) {
+      alert('리뷰 삭제에 실패했습니다.');
+      console.error(err);
+    } finally {
+    }
+  };
   const writeReview = async (review: Omit<IReview, 'id'>) => {
     setIsLoading(true);
     try {
@@ -60,5 +83,13 @@ export const useReview = ({ postId }: { postId?: string }) => {
     }
   };
 
-  return { writeReview, getReviews, reviews, isSuccess, isLoading, error };
+  return {
+    writeReview,
+    getReviews,
+    deleteReview,
+    reviews,
+    isSuccess,
+    isLoading,
+    error,
+  };
 };

@@ -66,7 +66,7 @@ const PostDetail = () => {
           <button onClick={onClickReviewBtn}>리뷰 작성하기</button>
         </S.ReviewBtnWrap>
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
-        {reviews.map((review) => <ReviewDisplay key={review.id} review={review} />)}
+        {reviews.map((review) => <ReviewDisplay key={review.id} review={review} postId={id || ''} />)}
       </S.Wrap >
     </>
   )
