@@ -31,40 +31,24 @@ export const ToiletName = styled.div`
   font-size: 24px;
   margin: 0 auto;
 `;
-export const PostContentWrap = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin-top: 100px;
-`;
-export const Right = styled.div`
-  > div {
-    display: flex;
-    gap: 24px;
-    > p:first-child {
-      min-width: 120px;
-    }
-  }
-  p {
-    font-size: 18px;
-    margin: 16px 0;
-  }
-`;
-export const Left = styled.div`
-  > div {
-    display: flex;
-    gap: 24px;
-    > p:first-child {
-      min-width: 120px;
-    }
-  }
-  p {
-    font-size: 18px;
-    margin: 16px 0;
-  }
-`;
+
 export const Line = styled.div`
-  margin: 60px 0;
+  margin: 40px 0;
   width: 100%;
   height: 2px;
   background-color: lightgray;
+`;
+export const ReviewBtnWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  button {
+    width: 100px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    margin-bottom: 40px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
 `;

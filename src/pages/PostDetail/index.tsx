@@ -2,17 +2,24 @@ import { Toilet } from "@_types/toilet";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import * as S from './Post.styles'
+import * as S from './PostDetail.styles'
 import KakaoStaticMap from "@_components/KakaoMap/KakaoStaticMap";
 import { db } from "@_remote/firebaseApp";
+import PostContent from "@_components/PostContent";
+import { ModalName, useModalStore } from "@_store/modal";
+import Modal from "@_components/common/Modal";
+import Review from "@_components/Review";
+import { useReview } from "@_hooks/Review/useReview";
+import ReviewDisplay from "@_components/ReviewDisplay";
 
 
 
 const PostDetail = () => {
+  let { id } = useParams()
   const [post, setPost] = useState<Toilet>()
-  let params = useParams()
+  const { getReviews, reviews } = useReview({ postId: id })
+  const { setModal } = useModalStore()
   const navigate = useNavigate()
-
 
   const getPostDetail = async (postId: string) => {
     if (postId) {
@@ -26,63 +33,42 @@ const PostDetail = () => {
     navigate(-1)
   }
 
+  const onClickReviewBtn = () => {
+    setModal({ name: ModalName.review, isActive: true })
+  }
+
   useEffect(() => {
-    if (params?.id) getPostDetail(params?.id)
-  }, [params?.id])
+    if (id) getPostDetail(id)
+  }, [id])
+
+  useEffect(() => {
+    if (id) getReviews(id)
+  }, [id])
 
   return (
-    <S.Wrap>
-      <S.PrevBtnWrap>
-        <S.PrevBtn size={30} onClick={onClickPrevBtn} />
-        <S.ToiletName>
-          {post?.화장실명}
-        </S.ToiletName>
-      </S.PrevBtnWrap>
-      <S.DataType>
-        <span>공공 데이터</span>
-      </S.DataType>
-      <S.PostContentWrap>
-        <S.Right>
-          <div>
-            <p>구분</p>
-            <p>{post?.구분}</p>
-          </div>
-          <div>
-            <p>개방시간</p>
-            <p>{post?.개방시간}</p>
-          </div>
-          <div>
-            <p>관리기관</p>
-            <p>{post?.관리기관명}</p>
-          </div>
-          <div>
-            <p>설치연월</p>
-            <p>{post?.설치연월}</p>
-          </div>
-        </S.Right>
-        <S.Left>
-          <div>
-            <p>전화번호</p>
-            <p>{post?.전화번호}</p>
-          </div>
-          <div>
-            <p>방식</p>
-            <p>{post?.오물처리방식}</p>
-          </div>
-          <div>
-            <p>비상벨</p>
-            <p>{post?.비상벨설치여부}</p>
-          </div>
-          <div>
-            <p>입구CCTV</p>
-            <p>{post?.화장실입구CCTV설치유무}</p>
-          </div>
-
-        </S.Left>
-      </S.PostContentWrap>
-      <S.Line />
-      <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
-    </S.Wrap >
+    <>
+      <Modal name={ModalName.review} >
+        {id ? <Review postId={id} /> : null}
+      </Modal>
+      <S.Wrap>
+        <S.PrevBtnWrap>
+          <S.PrevBtn size={30} onClick={onClickPrevBtn} />
+          <S.ToiletName>
+            {post?.화장실명}
+          </S.ToiletName>
+        </S.PrevBtnWrap>
+        <S.DataType>
+          <span>공공 데이터</span>
+        </S.DataType>
+        {post && <PostContent post={post} />}
+        <S.Line />
+        <S.ReviewBtnWrap>
+          <button onClick={onClickReviewBtn}>리뷰 작성하기</button>
+        </S.ReviewBtnWrap>
+        <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
+        {reviews.map((review) => <ReviewDisplay key={review.id} review={review} />)}
+      </S.Wrap >
+    </>
   )
 
 }

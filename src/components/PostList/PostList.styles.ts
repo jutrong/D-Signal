@@ -2,11 +2,9 @@ import styled from 'styled-components';
 
 export const Wrap = styled.div`
   position: absolute;
-  /* top: 50%; */
   bottom: 0%;
   right: 0%;
   z-index: 99;
-  /* transform: translateY(-50%); */
   max-width: 300px;
   height: 70%;
   background: white;

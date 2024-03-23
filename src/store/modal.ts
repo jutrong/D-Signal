@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 export enum ModalName {
   signin,
+  review,
 }
 
 interface IModalState {

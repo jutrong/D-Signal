@@ -24,6 +24,7 @@ const Home = () => {
     };
     fetchToilets();
   }, [currentPosition.address]);
+
   return (
     <S.Wrap>
       <KakaoMap toiletData={toiletData} />
