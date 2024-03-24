@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font: inherit;
     font-family: 'Pretendard-Regular';
-    color: inherit;
+    color: ${({ theme }) => theme.colors.blackColor};
     box-sizing: border-box;
   }
 
@@ -58,4 +58,3 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default GlobalStyle;
-

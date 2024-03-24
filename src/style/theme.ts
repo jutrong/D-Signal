@@ -16,9 +16,11 @@ export const FontStyle = createGlobalStyle`
 
 export const theme: DefaultTheme = {
   colors: {
-    mainColor: '#f39c12',
-    subColor: '#30336b',
-    blackColor: '#222',
+    mainColor: '#f2e3c6',
+    subColor: '#ffc6a5',
+    redColor: '#e6324b',
+    blackColor: '#2b2b2b',
+    grayColor: '#353634',
   },
 
   mobileL: `(min-width: ${size.mobileL})`,

@@ -16,8 +16,9 @@ export const DataType = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 24px;
-  color: white;
   span {
+    color: white;
+
     background-color: black;
     padding: 6px 18px;
     border-radius: 20px;
