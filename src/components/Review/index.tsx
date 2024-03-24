@@ -5,6 +5,8 @@ import RadioButton from '@_components/common/RadioButton';
 import { useState } from 'react';
 import { IReview } from '@_types/review';
 import { useReview } from '@_hooks/Review/useReview';
+import Textarea from '@_components/shared/Textarea';
+import Button from '@_components/shared/Button';
 
 const Review = ({ postId }: { postId: string }) => {
   const { closeModal } = useModalStore()
@@ -17,6 +19,7 @@ const Review = ({ postId }: { postId: string }) => {
     createdAt: new Date(),
     userId: '',
   })
+
   const onChangeReview = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReviewValue((prev) => ({ ...prev, content: e.target.value }))
   }
@@ -27,12 +30,13 @@ const Review = ({ postId }: { postId: string }) => {
 
   const onSubmit = () => {
     writeReview(reviewValue)
+    closeModal()
   }
 
   return (
     <>
       <S.HeaderWrap>
-        <S.Header>리뷰 남기기</S.Header>
+        <S.Header>화장실 리뷰</S.Header>
         <S.CloseBtn
           src="https://cdn1.iconfinder.com/data/icons/freeline/32/close_delete_remove_icon-1024.png"
           alt="취소버튼"
@@ -40,10 +44,11 @@ const Review = ({ postId }: { postId: string }) => {
       </S.HeaderWrap>
       <S.Wrap>
         <S.InputWrap>
-          <S.ReviewInput
+          <Textarea
             placeholder="리뷰를 입력해주세요."
             onChange={onChangeReview}
             value={reviewValue.content}
+            height="120px"
           />
         </S.InputWrap>
         <S.StarRatingWrap>
@@ -69,7 +74,15 @@ const Review = ({ postId }: { postId: string }) => {
             </RadioButton>
           </div>
         </S.ToiletPaperWrap>
-        <S.SubmitBtn onClick={onSubmit}>제출</S.SubmitBtn>
+        <S.BtnWrap>
+          <Button
+            $buttonColor="subColor"
+            width='80%'
+            height="30px"
+            onClick={onSubmit}>
+            작성하기
+          </Button>
+        </S.BtnWrap>
       </S.Wrap>
     </>
   );

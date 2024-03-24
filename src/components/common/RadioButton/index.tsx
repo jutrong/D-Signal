@@ -31,7 +31,7 @@ const Radio = styled.span`
 
 
   ${HiddenRadioInput}:checked + & {
-    border-color: #6f00ff;
+    border-color: ${({ theme }) => theme.colors.blackColor};
     transform: translateZ(0px);
     background-color: #fff;
   }

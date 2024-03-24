@@ -71,11 +71,8 @@ export const useReview = ({ postId }: { postId?: string }) => {
 
       await setDoc(reviewRef, newReview);
       setIsSuccess(true);
-      alert('리뷰가 등록되었습니다.');
     } catch (err) {
       setError(err as Error);
-      alert('리뷰가 등록이 실패했습니다.');
-      console.log(error);
       console.log(err);
       setIsSuccess(false);
     } finally {
