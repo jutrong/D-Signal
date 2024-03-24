@@ -64,7 +64,15 @@ const PostDetail = () => {
         {post && <PostContent post={post} />}
         <S.Line />
         <S.ReviewBtnWrap>
-          <Button $buttonColor="subColor" $fontColor="mainColor" width="100px" height="30px" $hasBorder={false}>리뷰 작성</Button>
+          <Button
+            $buttonColor="subColor"
+            $fontColor="blackColor"
+            width="100px"
+            height="30px"
+            $hasBorder={false}
+            onClick={onClickReviewBtn}>
+            리뷰 작성
+          </Button>
         </S.ReviewBtnWrap>
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
         {reviews.map((review) => <ReviewDisplay key={review.id} review={review} postId={id || ''} />)}

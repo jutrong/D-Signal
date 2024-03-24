@@ -13,10 +13,13 @@ interface ButtonStyle {
   fontSize?: string;
 }
 
-interface ButtonProps extends ButtonStyle {
+interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  ButtonStyle {
   children: ReactNode;
   className?: string;
 }
+
 
 const Button = ({ className, children, ...rest }: ButtonProps) => {
   return <ButtonStyled className={className} {...rest}>{children}</ButtonStyled >;
