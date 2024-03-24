@@ -39,16 +39,8 @@ export const Line = styled.div`
   background-color: lightgray;
 `;
 export const ReviewBtnWrap = styled.div`
+  margin-bottom: 30px;
+  margin-right: 10px;
   display: flex;
   justify-content: flex-end;
-  margin-right: 20px;
-  button {
-    width: 100px;
-    height: 40px;
-    background-color: black;
-    color: white;
-    margin-bottom: 40px;
-    font-size: 14px;
-    border-radius: 6px;
-  }
 `;

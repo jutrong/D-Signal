@@ -12,7 +12,7 @@ export const FontStyle = createGlobalStyle`
     src: url('/assets/fonts/Pretendard-Regular.otf') format('otf');
 }
 
-`
+`;
 
 export const theme: DefaultTheme = {
   colors: {
@@ -25,3 +25,5 @@ export const theme: DefaultTheme = {
   tablet: `(min-width: ${size.tablet})`,
   laptop: `(min-width: ${size.laptop})`,
 };
+
+export type ThemeColor = keyof typeof theme.colors;

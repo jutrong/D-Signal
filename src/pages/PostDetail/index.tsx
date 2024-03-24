@@ -11,6 +11,7 @@ import Modal from "@_components/common/Modal";
 import Review from "@_components/Review";
 import { useReview } from "@_hooks/Review/useReview";
 import ReviewDisplay from "@_components/ReviewDisplay";
+import Button from "@_components/shared/Button";
 
 
 
@@ -63,7 +64,7 @@ const PostDetail = () => {
         {post && <PostContent post={post} />}
         <S.Line />
         <S.ReviewBtnWrap>
-          <button onClick={onClickReviewBtn}>리뷰 작성하기</button>
+          <Button $buttonColor="subColor" $fontColor="mainColor" width="100px" height="30px" $hasBorder={false}>리뷰 작성</Button>
         </S.ReviewBtnWrap>
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
         {reviews.map((review) => <ReviewDisplay key={review.id} review={review} postId={id || ''} />)}
