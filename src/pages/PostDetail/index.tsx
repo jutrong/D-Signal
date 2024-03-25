@@ -20,6 +20,7 @@ import ReviewDisplay from "@_components/ReviewDisplay";
 import Button from "@_components/shared/Button";
 
 // TODO : 로그인한 유저만 리뷰 작성, 삭제
+// TODO ; 게시글 불러오기 로직 분리
 const PostDetail = () => {
   const { id } = useParams()
   const [post, setPost] = useState<Toilet>()
@@ -97,7 +98,13 @@ const PostDetail = () => {
             ))}
           </Swiper>
         ) : (
-          <p>리뷰가 없습니다.</p>
+          <S.NoReview>
+            <img
+              src="https://cdn4.iconfinder.com/data/icons/business-and-finance-colorful-free-hand-drawn-set/100/message_open-64.png"
+              alt=""
+            />
+            <p>리뷰를 작성해주세요</p>
+          </S.NoReview>
         )}
 
       </S.Wrap >

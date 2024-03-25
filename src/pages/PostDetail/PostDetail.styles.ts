@@ -45,3 +45,13 @@ export const ReviewBtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+export const NoReview = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.redColor};
+  font-weight: bold;
+  flex-direction: column;
+  gap: 20px;
+`;
