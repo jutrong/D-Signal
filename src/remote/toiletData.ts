@@ -15,9 +15,12 @@ export const getToiletsBySimilarAddress = async (addressKeyword: string) => {
     where('소재지지번주소', '<=', addressKeyword + '\uf8ff'),
   );
   const querySnapshot = await getDocs(q);
+
   const toilets: any[] = [];
+
   querySnapshot.forEach((doc) => {
     toilets.push({ id: doc.id, ...doc.data() });
   });
+
   return toilets;
 };
