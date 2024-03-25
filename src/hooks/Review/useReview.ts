@@ -6,6 +6,7 @@ import {
 import { useUserStore } from '@_store/user';
 import { IReview, IReviewExtended } from '@_types/review';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export const useReview = (postId?: string) => {
   const [reviews, setReviews] = useState<IReviewExtended[]>([]);
@@ -30,9 +31,13 @@ export const useReview = (postId?: string) => {
     if (!postId) return;
     try {
       await deleteReviewById(postId, reviewId);
+      toast.success('리뷰를 삭제하였습니다..');
       fetchReviews();
     } catch (err) {
       setError(err as Error);
+      toast.error(
+        '알 수 없는 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
+      );
     }
   };
 
@@ -46,9 +51,13 @@ export const useReview = (postId?: string) => {
         createdAt: new Date(),
         postId,
       });
+      toast.success('리뷰를 작성하였습니다..');
       fetchReviews();
     } catch (err) {
       setError(err as Error);
+      toast.error(
+        '알 수 없는 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
+      );
     } finally {
       setIsLoading(false);
     }
