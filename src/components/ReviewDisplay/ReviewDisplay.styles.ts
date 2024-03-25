@@ -7,7 +7,7 @@ export const Wrap = styled.div`
   margin: 50px 20px;
   border: 1px solid lightgray;
   border-radius: 10px;
-  min-width: 440px;
+  min-width: 380px;
   padding-left: 20px;
   margin-top: 80px;
 `;

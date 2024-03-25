@@ -1,5 +1,6 @@
+
 import { useReview } from "@_hooks/Review/useReview";
-import { IReview, IReviewExtended } from "@_types/review";
+import { IReviewExtended } from "@_types/review";
 
 import * as S from './ReviewDisplay.styles'
 import StarRating from "@_components/StarRating";

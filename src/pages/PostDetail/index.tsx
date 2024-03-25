@@ -1,3 +1,9 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// import { Pagination, Navigation } from 'swiper';
 import { Toilet } from "@_types/toilet";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -73,10 +79,27 @@ const PostDetail = () => {
             리뷰 작성
           </Button>
         </S.ReviewBtnWrap>
+
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
-        <div style={{ display: "flex", alignContent: "center", justifyContent: "space-around", flexWrap: "nowrap" }}>
-          {reviews.map((review) => <ReviewDisplay key={review.id} review={review} postId={id || ''} />)}
-        </div>
+        {reviews.length > 0 ? (
+          <Swiper
+            modules={[Pagination, Navigation]}
+            spaceBetween={320} // 슬라이드 간의 간격
+            slidesPerView={3} // 한 번에 보여질 슬라이드 개수
+            pagination={{ clickable: true }} // 페이지네이션 활성화
+            navigation // 네비게이션 활성화
+            style={{ width: '100%', padding: '10px 0' }} // Swiper 컨테이너 스타일링
+          >
+            {reviews.map((review) => (
+              <SwiperSlide key={review.id}>
+                <ReviewDisplay review={review} postId={id || ''} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <p>리뷰가 없습니다.</p>
+        )}
+
       </S.Wrap >
     </>
   )
