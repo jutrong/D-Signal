@@ -30,6 +30,7 @@ const ElTextarea = styled.textarea<TextareaProps>`
    background: none;
    outline: none;
    resize: none;
+   font-size: 12px;
    &::placeholder {
      top: 10%;
      font-size: 12px;

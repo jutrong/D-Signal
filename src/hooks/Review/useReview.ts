@@ -1,18 +1,20 @@
 import COLLECTIONS from '@_constants';
 import { db } from '@_remote/firebaseApp';
 import { useUserStore } from '@_store/user';
-import { IReview } from '@_types/review';
+import { IReview, IReviewExtended } from '@_types/review';
+import { User } from '@_types/user';
 import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   setDoc,
 } from 'firebase/firestore';
 import { useState } from 'react';
 
 export const useReview = ({ postId }: { postId?: string }) => {
-  const [reviews, setReviews] = useState<IReview[]>([]);
+  const [reviews, setReviews] = useState<IReviewExtended[]>([]);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -25,16 +27,27 @@ export const useReview = ({ postId }: { postId?: string }) => {
       const reviewRef = collection(postRef, COLLECTIONS.REVIEW);
       const snapshot = await getDocs(reviewRef);
 
-      const reviewsData: IReview[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as IReview[];
+      const reviewsData: IReviewExtended[] = await Promise.all(
+        snapshot.docs.map(async (snapshotDoc) => {
+          const review = snapshotDoc.data() as IReview;
+          review.id = snapshotDoc.id;
+
+          if (review.userId) {
+            const userRef = doc(db, COLLECTIONS.USER, review.userId);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+              const userData = userSnap.data() as User;
+              return { ...review, user: userData };
+            }
+          }
+          return review;
+        }),
+      );
 
       setReviews(reviewsData);
-      setIsLoading(false);
-      return reviewsData;
     } catch (err) {
       setError(err as Error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -56,6 +69,7 @@ export const useReview = ({ postId }: { postId?: string }) => {
     } finally {
     }
   };
+
   const writeReview = async (review: Omit<IReview, 'id'>) => {
     setIsLoading(true);
     try {

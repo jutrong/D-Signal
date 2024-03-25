@@ -5,7 +5,7 @@ export const Wrap = styled.div`
   width: 100%;
   margin: 0 auto;
   border: 1px solid lightgray;
-  padding: 120px 260px;
+  padding: 120px 200px;
   display: flex;
   flex-direction: column;
 `;

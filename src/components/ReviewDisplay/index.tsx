@@ -1,8 +1,11 @@
 import { useReview } from "@_hooks/Review/useReview";
-import { IReview } from "@_types/review";
+import { IReview, IReviewExtended } from "@_types/review";
+
+import * as S from './ReviewDisplay.styles'
+import StarRating from "@_components/StarRating";
 
 interface IReviewDisplayProps {
-  review: IReview;
+  review: IReviewExtended;
   postId: string;
 }
 
@@ -12,14 +15,25 @@ const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
   const onClickDelete = () => {
     deleteReview(postId, review.id)
   }
+
   return (
-    <div>
-      <h2>Review Display</h2>
-      <p>{review.content}</p>
-      <p>{review.rating}</p>
-      <p>{review.tissue ? '휴지 있음' : '휴지 없음'}</p>
-      <button onClick={onClickDelete}> 리뷰 삭제</button>
-    </div>
+    <S.Wrap>
+      <S.ReviewWrap>
+        <S.ProfileWrap>
+          <S.Profile src={review.user?.photoURL} />
+          <S.UserName>
+            {review.user?.displayName}
+          </S.UserName>
+        </S.ProfileWrap>
+        <S.ReviewContent>
+          {review.content}
+        </S.ReviewContent>
+        <div style={{ display: 'flex', alignItems: "center", gap: "40px" }}>
+          <StarRating isStatic={true} rating={review.rating} />
+          <div>휴지 여부 :{review.tissue ? <span> 🧻</span> : <span> ❌</span>} </div>
+        </div>
+      </S.ReviewWrap>
+    </S.Wrap>
   );
 }
 

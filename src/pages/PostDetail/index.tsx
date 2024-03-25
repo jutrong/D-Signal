@@ -29,6 +29,7 @@ const PostDetail = () => {
       setPost({ id: docSnap.id, ...(docSnap.data() as Toilet) })
     }
   }
+  console.log("reviews", reviews)
 
   const onClickPrevBtn = () => {
     navigate(-1)
@@ -75,7 +76,9 @@ const PostDetail = () => {
           </Button>
         </S.ReviewBtnWrap>
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
-        {reviews.map((review) => <ReviewDisplay key={review.id} review={review} postId={id || ''} />)}
+        <div style={{ display: "flex", alignContent: "center", justifyContent: "space-around", flexWrap: "nowrap" }}>
+          {reviews.map((review) => <ReviewDisplay key={review.id} review={review} postId={id || ''} />)}
+        </div>
       </S.Wrap >
     </>
   )

@@ -8,6 +8,7 @@ import { useReview } from '@_hooks/Review/useReview';
 import Textarea from '@_components/shared/Textarea';
 import Button from '@_components/shared/Button';
 
+// TODO: 빈 값 제출안되게 유효성 검사 후 에러메시지
 const Review = ({ postId }: { postId: string }) => {
   const { closeModal } = useModalStore()
   const { writeReview } = useReview({ postId })
