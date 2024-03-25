@@ -4,71 +4,66 @@ import {
   writeReview,
 } from '@_remote/review';
 import { useUserStore } from '@_store/user';
-import { IReview, IReviewExtended } from '@_types/review';
-import { useState } from 'react';
+import { IReview } from '@_types/review';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 export const useReview = (postId?: string) => {
-  const [reviews, setReviews] = useState<IReviewExtended[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const queryClient = useQueryClient();
   const { user } = useUserStore();
+  const isEnabled = postId !== undefined;
 
-  const fetchReviews = async () => {
-    if (!postId) return;
-    setIsLoading(true);
-    try {
-      const reviewsData = await getReviewsByPostId(postId);
-      setReviews(reviewsData);
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    isLoading,
+    error,
+    data: reviews,
+  } = useQuery({
+    queryKey: ['reviews', postId],
+    queryFn: () => (postId ? getReviewsByPostId(postId) : Promise.resolve([])),
+    enabled: isEnabled,
+  });
 
-  const deleteReview = async (reviewId: string) => {
-    if (!postId) return;
-    try {
-      await deleteReviewById(postId, reviewId);
-      toast.success('리뷰를 삭제하였습니다..');
-      fetchReviews();
-    } catch (err) {
-      setError(err as Error);
-      toast.error(
-        '알 수 없는 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
-      );
-    }
-  };
-
-  const addReview = async (review: Omit<IReview, 'id'>) => {
-    setIsLoading(true);
-    if (!postId) return;
-    try {
-      await writeReview({
-        ...review,
-        userId: user?.uid || null,
-        createdAt: new Date(),
-        postId,
+  const deleteReviewMutation = useMutation({
+    mutationKey: ['deleteReview'],
+    mutationFn: (reviewId: string) =>
+      postId ? deleteReviewById(postId, reviewId) : Promise.resolve(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', postId],
       });
-      toast.success('리뷰를 작성하였습니다..');
-      fetchReviews();
-    } catch (err) {
-      setError(err as Error);
-      toast.error(
-        '알 수 없는 오류가 발생하였습니다. 잠시 후 다시 시도해주세요.',
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      toast.success('리뷰가 삭제되었습니다.');
+    },
+    onError: (err: Error) => {
+      toast.error('리뷰 삭제에 실패했습니다.');
+    },
+  });
+
+  const addReviewMutation = useMutation({
+    mutationKey: ['addReview'],
+    mutationFn: (review: Omit<IReview, 'id'>) =>
+      postId
+        ? writeReview({
+            ...review,
+            postId,
+            userId: user?.uid || null,
+          })
+        : Promise.resolve(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', postId],
+      });
+      toast.success('리뷰를 작성하였습니다.');
+    },
+    onError: (err: Error) => {
+      toast.error('리뷰 작성에 실패했습니다.');
+    },
+  });
 
   return {
-    addReview,
-    fetchReviews,
-    deleteReview,
     reviews,
     isLoading,
     error,
+    deleteReview: deleteReviewMutation.mutate,
+    addReview: addReviewMutation.mutate,
   };
 };

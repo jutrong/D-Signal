@@ -23,7 +23,7 @@ import Button from "@_components/shared/Button";
 const PostDetail = () => {
   const { id } = useParams()
   const [post, setPost] = useState<Toilet>()
-  const { fetchReviews, reviews } = useReview(id)
+  const { reviews } = useReview(id)
   const { setModal } = useModalStore()
   const navigate = useNavigate()
 
@@ -47,9 +47,6 @@ const PostDetail = () => {
     if (id) getPostDetail(id)
   }, [id])
 
-  useEffect(() => {
-    if (id) fetchReviews()
-  }, [id])
 
   return (
     <>
@@ -81,7 +78,7 @@ const PostDetail = () => {
         </S.ReviewBtnWrap>
 
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
-        {reviews.length > 0 ? (
+        {reviews && reviews.length > 0 ? (
           <Swiper
             modules={[Pagination, Navigation]}
             spaceBetween={320} // 슬라이드 간의 간격
