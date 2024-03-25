@@ -11,7 +11,7 @@ import Button from '@_components/shared/Button';
 // TODO: 빈 값 제출안되게 유효성 검사 후 에러메시지
 const Review = ({ postId }: { postId: string }) => {
   const { closeModal } = useModalStore()
-  const { writeReview } = useReview({ postId })
+  const { addReview } = useReview(postId)
   const [reviewValue, setReviewValue] = useState<Omit<IReview, 'id'>>({
     postId: postId,
     content: '',
@@ -30,7 +30,7 @@ const Review = ({ postId }: { postId: string }) => {
   };
 
   const onSubmit = () => {
-    writeReview(reviewValue)
+    addReview(reviewValue)
     closeModal()
   }
 

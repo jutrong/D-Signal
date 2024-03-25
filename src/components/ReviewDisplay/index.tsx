@@ -10,10 +10,10 @@ interface IReviewDisplayProps {
 }
 
 const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
-  const { deleteReview } = useReview({ postId })
+  const { deleteReview } = useReview(postId)
 
   const onClickDelete = () => {
-    deleteReview(postId, review.id)
+    deleteReview(review.id)
   }
 
   return (

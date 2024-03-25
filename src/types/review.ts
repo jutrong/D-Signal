@@ -2,7 +2,7 @@ import { User } from './user';
 
 export interface IReview {
   id: string;
-  userId: string;
+  userId: string | null;
   postId: string;
   content: string;
   rating: number;

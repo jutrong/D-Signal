@@ -13,12 +13,11 @@ import { useReview } from "@_hooks/Review/useReview";
 import ReviewDisplay from "@_components/ReviewDisplay";
 import Button from "@_components/shared/Button";
 
-
-
+// TODO : 로그인한 유저만 리뷰 작성, 삭제
 const PostDetail = () => {
-  let { id } = useParams()
+  const { id } = useParams()
   const [post, setPost] = useState<Toilet>()
-  const { getReviews, reviews } = useReview({ postId: id })
+  const { fetchReviews, reviews } = useReview(id)
   const { setModal } = useModalStore()
   const navigate = useNavigate()
 
@@ -29,7 +28,6 @@ const PostDetail = () => {
       setPost({ id: docSnap.id, ...(docSnap.data() as Toilet) })
     }
   }
-  console.log("reviews", reviews)
 
   const onClickPrevBtn = () => {
     navigate(-1)
@@ -44,7 +42,7 @@ const PostDetail = () => {
   }, [id])
 
   useEffect(() => {
-    if (id) getReviews(id)
+    if (id) fetchReviews()
   }, [id])
 
   return (
