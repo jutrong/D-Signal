@@ -10,7 +10,7 @@ interface ButtonStyle {
   borderColor?: ThemeColor;
   borderRadius?: string;
   $fontColor?: ThemeColor;
-  fontSize?: string;
+  $fontSize?: string;
 }
 
 interface ButtonProps
@@ -41,7 +41,7 @@ const ButtonStyled = styled.button<ButtonStyle>`
   borderColor = "white",
   borderRadius = "4px",
   $fontColor = "black",
-  fontSize = "14px",
+  $fontSize = "14px",
 }) => css`
     width: ${width};
     height: ${height};
@@ -49,7 +49,7 @@ const ButtonStyled = styled.button<ButtonStyle>`
     border: ${$hasBorder ? `1px solid ${theme.colors[borderColor]}` : "none"};
     border-radius: ${borderRadius};
     color: ${theme.colors[$fontColor]};
-    font-size: ${fontSize};
+    font-size: ${$fontSize};
   `}
 `;
 

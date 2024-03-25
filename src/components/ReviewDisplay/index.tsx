@@ -4,6 +4,7 @@ import { IReviewExtended } from "@_types/review";
 
 import * as S from './ReviewDisplay.styles'
 import StarRating from "@_components/StarRating";
+import Button from "@_components/shared/Button";
 
 interface IReviewDisplayProps {
   review: IReviewExtended;
@@ -21,10 +22,24 @@ const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
     <S.Wrap>
       <S.ReviewWrap>
         <S.ProfileWrap>
-          <S.Profile src={review.user?.photoURL} />
-          <S.UserName>
-            {review.user?.displayName}
-          </S.UserName>
+          <S.ProfileImgWrap>
+            <S.Profile src={review.user?.photoURL} />
+            <S.UserName>
+              {review.user?.displayName}
+            </S.UserName>
+          </S.ProfileImgWrap>
+          <S.DeleteBtnWrap>
+            <Button
+              $buttonColor="mainColor"
+              $hasBorder={true}
+              width="50px"
+              $fontSize="12px"
+              height="30px"
+              onClick={onClickDelete}
+            >
+              삭제
+            </Button>
+          </S.DeleteBtnWrap>
         </S.ProfileWrap>
         <S.ReviewContent>
           {review.content}

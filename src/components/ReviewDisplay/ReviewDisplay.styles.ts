@@ -18,7 +18,14 @@ export const ReviewWrap = styled.div`
 export const ProfileWrap = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 14px;
+  margin-bottom: 20px;
+`;
+export const ProfileImgWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `;
 export const Profile = styled.img`
   border-radius: 50%;
@@ -26,6 +33,9 @@ export const Profile = styled.img`
 `;
 export const UserName = styled.p`
   font-weight: 800;
+`;
+export const DeleteBtnWrap = styled.div`
+  margin-right: 10px;
 `;
 export const ReviewContent = styled.p`
   margin-top: 12px;
