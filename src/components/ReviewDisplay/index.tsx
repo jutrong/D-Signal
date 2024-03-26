@@ -5,6 +5,7 @@ import { IReviewExtended } from "@_types/review";
 import * as S from './ReviewDisplay.styles'
 import StarRating from "@_components/StarRating";
 import Button from "@_components/shared/Button";
+import { useUserStore } from "@_store/user";
 
 interface IReviewDisplayProps {
   review: IReviewExtended;
@@ -12,6 +13,7 @@ interface IReviewDisplayProps {
 }
 
 const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
+  const { user } = useUserStore()
   const { deleteReview } = useReview(postId)
 
   const onClickDelete = () => {
@@ -28,18 +30,21 @@ const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
               {review.user?.displayName}
             </S.UserName>
           </S.ProfileImgWrap>
-          <S.DeleteBtnWrap>
-            <Button
-              $buttonColor="mainColor"
-              $hasBorder={true}
-              width="50px"
-              $fontSize="12px"
-              height="30px"
-              onClick={onClickDelete}
-            >
-              삭제
-            </Button>
-          </S.DeleteBtnWrap>
+          {review.user?.uid === user?.uid &&
+            <S.DeleteBtnWrap>
+              <Button
+                $buttonColor="mainColor"
+                $hasBorder={true}
+                width="50px"
+                $fontSize="12px"
+                height="30px"
+                onClick={onClickDelete}
+              >
+                삭제
+              </Button>
+            </S.DeleteBtnWrap>
+          }
+
         </S.ProfileWrap>
         <S.ReviewContent>
           {review.content}
