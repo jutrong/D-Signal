@@ -18,6 +18,7 @@ import Review from "@_components/Review";
 import { useReview } from "@_hooks/Review/useReview";
 import ReviewDisplay from "@_components/ReviewDisplay";
 import Button from "@_components/shared/Button";
+import { useUserStore } from '@_store/user';
 
 // TODO : 로그인한 유저만 리뷰 작성, 삭제
 // TODO ; 게시글 불러오기 로직 분리
@@ -26,6 +27,7 @@ const PostDetail = () => {
   const [post, setPost] = useState<Toilet>()
   const { reviews } = useReview(id)
   const { setModal } = useModalStore()
+  const { user } = useUserStore()
   const navigate = useNavigate()
 
   const getPostDetail = async (postId: string) => {
@@ -41,7 +43,8 @@ const PostDetail = () => {
   }
 
   const onClickReviewBtn = () => {
-    setModal({ name: ModalName.review, isActive: true })
+    if (!user) setModal({ name: ModalName.signin, isActive: true })
+    else setModal({ name: ModalName.review, isActive: true })
   }
 
   useEffect(() => {
@@ -77,7 +80,6 @@ const PostDetail = () => {
             리뷰 작성
           </Button>
         </S.ReviewBtnWrap>
-
         <KakaoStaticMap lat={post?.WGS84위도 || 0} lng={post?.WGS84경도 || 0} toiletName={post?.화장실명} />
         {reviews && reviews.length > 0 ? (
           <Swiper
