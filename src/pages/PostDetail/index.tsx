@@ -19,24 +19,17 @@ import { useReview } from "@_hooks/Review/useReview";
 import ReviewDisplay from "@_components/ReviewDisplay";
 import Button from "@_components/shared/Button";
 import { useUserStore } from '@_store/user';
+import usePost from '@_hooks/Post/usePost';
 
-// TODO : 로그인한 유저만 리뷰 작성, 삭제
 // TODO ; 게시글 불러오기 로직 분리
 const PostDetail = () => {
-  const { id } = useParams()
-  const [post, setPost] = useState<Toilet>()
+  const { id } = useParams() as { id: string }
   const { reviews } = useReview(id)
   const { setModal } = useModalStore()
+  const { post } = usePost(id)
   const { user } = useUserStore()
   const navigate = useNavigate()
 
-  const getPostDetail = async (postId: string) => {
-    if (postId) {
-      const docRef = doc(db, "toilet", postId);
-      const docSnap = await getDoc(docRef);
-      setPost({ id: docSnap.id, ...(docSnap.data() as Toilet) })
-    }
-  }
 
   const onClickPrevBtn = () => {
     navigate(-1)
@@ -46,10 +39,6 @@ const PostDetail = () => {
     if (!user) setModal({ name: ModalName.signin, isActive: true })
     else setModal({ name: ModalName.review, isActive: true })
   }
-
-  useEffect(() => {
-    if (id) getPostDetail(id)
-  }, [id])
 
 
   return (
