@@ -1,11 +1,10 @@
-
 import { useReview } from "@_hooks/Review/useReview";
 import { IReviewExtended } from "@_types/review";
-
 import * as S from './ReviewDisplay.styles'
 import StarRating from "@_components/StarRating";
 import Button from "@_components/shared/Button";
 import { useUserStore } from "@_store/user";
+import { convertTimestampToDate, formatDate } from "@_utils/Date";
 
 interface IReviewDisplayProps {
   review: IReviewExtended;
@@ -15,10 +14,12 @@ interface IReviewDisplayProps {
 const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
   const { user } = useUserStore()
   const { deleteReview } = useReview(postId)
+  const date = convertTimestampToDate(review.createdAt);
 
   const onClickDelete = () => {
     deleteReview(review.id)
   }
+
 
   return (
     <S.Wrap>
@@ -26,9 +27,14 @@ const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
         <S.ProfileWrap>
           <S.ProfileImgWrap>
             <S.Profile src={review.user?.photoURL} />
-            <S.UserName>
-              {review.user?.displayName}
-            </S.UserName>
+            <div>
+              <S.UserName>
+                {review.user?.displayName}
+              </S.UserName>
+              <S.Date>
+                {formatDate(date)}
+              </S.Date>
+            </div>
           </S.ProfileImgWrap>
           {review.user?.uid === user?.uid &&
             <S.DeleteBtnWrap>
@@ -57,5 +63,4 @@ const ReviewDisplay = ({ review, postId }: IReviewDisplayProps) => {
     </S.Wrap>
   );
 }
-
 export default ReviewDisplay;

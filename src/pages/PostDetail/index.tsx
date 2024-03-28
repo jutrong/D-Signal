@@ -21,7 +21,6 @@ import Button from "@_components/shared/Button";
 import { useUserStore } from '@_store/user';
 import usePost from '@_hooks/Post/usePost';
 
-// TODO ; 게시글 불러오기 로직 분리
 const PostDetail = () => {
   const { id } = useParams() as { id: string }
   const { reviews } = useReview(id)

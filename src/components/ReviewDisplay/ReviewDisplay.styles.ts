@@ -34,6 +34,11 @@ export const Profile = styled.img`
 export const UserName = styled.p`
   font-weight: 800;
 `;
+export const Date = styled.p`
+  font-size: 10px;
+  opacity: 0.6;
+  margin-left: 1px;
+`;
 export const DeleteBtnWrap = styled.div`
   margin-right: 10px;
 `;
