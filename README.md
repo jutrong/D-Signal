@@ -5,9 +5,9 @@
 ## ⚒️ 기술 스택
 
 - React
-- Typescript 
+- Typescript
 - Zustand
 - Styled-components
 - Tenstack-query
 - Firebase ( Firestore )
-- Kakao Map apie
+- Kakao Map api
